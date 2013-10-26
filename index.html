@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Big Time</title>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+
+<!--[if IE]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<script src="js/jquery.js"></script>
+<script>
+function bigtime() {
+	var num = parseFloat(document.forms['info']['time'].value);
+	$('#thetime').html('');
+	$('#reset').show();
+	if (!num) {
+		$('#thetime').append('That is not a number');
+	} else {
+		var sec = num*60;
+		var timer = setInterval(function() {
+
+			var min = Math.floor(sec / 60);
+			var secs = sec % 60;
+			if (secs < 10) {
+				secs = '0'+secs;
+			}
+			var time = min + ':' + secs;
+			$('#thetime').html(time);
+			sec--;
+
+			if (sec < 0) {
+				clearTimeout(timer);
+				$('#thetime').html('fin.');
+			}
+			return timer;
+		}, 1000);
+	}
+	return false;
+}
+
+</script>
+</head>
+
+<body>
+
+
+
+<header>
+	<form id="time-form" name="info" onsubmit="return bigtime()">
+		Minutes: <input id="time-input" type="text" name="time" placeholder=". . .">
+		<input type="submit" class="button" id="submit" value="Submit">
+		<button class="button" id="reset" value="Reset" onclick="clearInterval(timer)">Reset</button>
+	</form>
+</header>
+
+<div id="centered">
+	<p id="thetime"></p>
+</div>
+
+
+
+
+
+</body>
+</html>
